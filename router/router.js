@@ -2,6 +2,7 @@ const express = require("express");
 let router = express.Router();
 // 导入相应的控制器
 let CateController = require("../controller/CateController");
+let ArtController = require("../controller/ArtController");
 // 主页面
 router.get(/^\/$|^\/index$/,(req,res)=>{
     // res.sendFile(path.join(__dirname,"views/index.html"));
@@ -23,6 +24,8 @@ router.get("/artindex",(req,res)=>{
     // res.sendFile(path.join(__dirname,"views/index.html"));
     res.render("article-index.html");
 });
+// 获取文章数据接口
+router.get("/allarticle",ArtController.allArticle);
 
 // 获取数据库的接口
 router.get("/getCate",CateController.getCate);
