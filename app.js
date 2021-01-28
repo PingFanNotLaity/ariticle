@@ -15,6 +15,8 @@ app.engine('html', express_template);
 // 首页
 app.set('view engine', 'html');
 app.use("/public",express.static(path.join(__dirname,"public")));
+// 上传图片路径的中间件
+app.use("/uploads",express.static(path.join(__dirname,"uploads")));
 app.use(router);
 app.listen(4000,()=>{
     console.log("server is open, port number is 4000");

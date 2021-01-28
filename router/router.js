@@ -1,4 +1,6 @@
 const express = require("express");
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 let router = express.Router();
 // 导入相应的控制器
 let CateController = require("../controller/CateController");
@@ -26,7 +28,18 @@ router.get("/artindex",(req,res)=>{
 });
 // 获取文章数据接口
 router.get("/allarticle",ArtController.allArticle);
-
+// 提交文章数据
+router.post("/postArt",ArtController.postArt);
+// 删除文章
+router.post("/delArticle",ArtController.delArticle);
+// 添加文章数据
+router.get("/addart",ArtController.addArt);
+// 编辑文章数据
+router.get("/artedit",ArtController.artEdit);
+// 上传文件接口
+router.post('/upload',upload.single("file"),ArtController.upload)
+// 修改文章状态
+router.post('/updStatus',ArtController.updStatus)
 // 获取数据库的接口
 router.get("/getCate",CateController.getCate);
 // 获取数据库cat_id的接口
