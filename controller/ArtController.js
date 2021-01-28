@@ -70,10 +70,17 @@ ArticleContorller.upload = (req,res)=>{
             res.json({code:0,message:'上传文件成功',src:newPath})
         })
     }else{
-        res.json({code:1,message:'上传文件失败'})
+        res.json({code:1,message:'上传文件失败',src:""})
     }
     
     
+}
+// 获取单条文章
+ArticleContorller.getOneArt = async(req,res)=>{
+    let {art_id} = req.query;
+    let sql = `select * from article where art_id = ${art_id}`;
+    let data = await model(sql);
+    res.json(data[0] || {});
 }
 // 修改文章状态
 ArticleContorller.updStatus = async (req,res)=>{

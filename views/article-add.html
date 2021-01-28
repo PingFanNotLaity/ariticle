@@ -47,7 +47,8 @@
             <img src="" alt="" id="cover-preview">
             </div>
           </div>
-          <div class="layui-form-item">
+          <div style="position:relative;">
+            <div class="layui-form-item" style="position:absolute;top:0;left:0;z-index:99999">
             <label class="layui-form-label">所属分类</label>
             <div class="layui-input-inline">
               <select id="cat_id" name="cat_id" lay-verify="required">
@@ -60,7 +61,8 @@
               </select>
             </div>
           </div>
-          <div class="layui-form-item">
+          </div>
+          <div class="layui-form-item" style="margin-top:70px;">
             <label class="layui-form-label">状态</label>
             <div class="layui-input-block">
               <input type="radio" name="status" value="0" title="未发布" checked>
@@ -70,7 +72,8 @@
           <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">内容</label>
             <div class="layui-input-block">
-              <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+              <!-- <textarea name="content" id="content" placeholder="请输入内容" class="layui-textarea"></textarea> -->
+              <div id="content"></div>
             </div>
           </div>
           <div class="layui-form-item">
@@ -86,7 +89,13 @@
 
   </div>
   {{include './common/scriptJs.html'}}
+  <script src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
   <script>
+    const E = window.wangEditor
+    const editor = new E('#content')
+    editor.config.uploadImgShowBase64 = true
+    // 或者 const editor = new E( document.getElementById('div1') )
+    editor.create()
     layui.use(['element','form','layer','upload'], function () {
       var form = layui.form;
       var upload = layui.upload;
@@ -109,6 +118,8 @@
       //监听提交
       form.on('submit(formDemo)', function (data) {
         let formData = data.field;
+        // 获取富文本编辑器中的内容
+        formData.content = editor.txt.html()
         // 发送ajax请求，入库数据
         $.post("/postArt",formData,({errcode,message})=>{
           if(errcode == 0) {

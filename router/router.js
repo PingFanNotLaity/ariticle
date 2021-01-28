@@ -38,9 +38,11 @@ router.get("/addart",ArtController.addArt);
 router.get("/artedit",ArtController.artEdit);
 // 上传文件接口
 router.post('/upload',upload.single("file"),ArtController.upload)
+// 获取单挑文章数据的接口
+router.get("/getOneArt",ArtController.getOneArt);
 // 修改文章状态
 router.post('/updStatus',ArtController.updStatus)
-// 获取数据库的接口
+// 获取所有分类数据的接口
 router.get("/getCate",CateController.getCate);
 // 获取数据库cat_id的接口
 router.get("/getOneCate",CateController.getOneCate);

@@ -53,6 +53,7 @@
 </div>
 {{include './common/scriptJs.html'}}
 <script>
+  // 获取地址栏中cat_id的参数 
 let url = location.href;
 let reg = /cat_id=(.*)&?/;
 let [,cat_id] = [...reg.exec(url)];
