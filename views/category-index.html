@@ -49,6 +49,9 @@
 </div>
 {{include './common/scriptJs.html'}}
 <script>
+  layui.use(['layer','element'], function () {
+ 
+});
   function renderTable(data) {
     let tbodyHtml = ``;
     data.forEach((item,index)=>{
@@ -81,12 +84,6 @@
   }
   initCatData();
 //JavaScript代码区域
-var layer;
-layui.use(['layer','element'], function(){
-  var element = layui.element;
-  layer = layui.layer;
-});
-
 // ajax删除 需要用委托事件因为数据是动态添加的
 $("tbody").on("click",".del",function() {
     let _this = $(this);

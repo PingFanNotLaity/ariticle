@@ -1,6 +1,6 @@
 const model = require("../model/model.js");
 const responseMessage = require("../util/responseMessage.js");
-const { render } = require("art-template");
+const {render} = require("art-template");
 let CateController = {};
 // 控制后台分类的页面
 CateController.catindex = (req,res)=>{

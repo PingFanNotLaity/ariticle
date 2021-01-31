@@ -44,23 +44,23 @@
           <div class="layui-form-item">
             <label class="layui-form-label">预览</label>
             <div class="layui-input-block">
-            <img src="" alt="" id="cover-preview">
+              <img src="" alt="" id="cover-preview">
             </div>
           </div>
           <div style="position:relative;">
             <div class="layui-form-item" style="position:absolute;top:0;left:0;z-index:99999">
-            <label class="layui-form-label">所属分类</label>
-            <div class="layui-input-inline">
-              <select id="cat_id" name="cat_id" lay-verify="required">
-                <option value=""></option>
-                <option value="0">军事</option>
-                <option value="1">娱乐</option>
-                <option value="2">体育</option>
-                <option value="3">新闻</option>
-                <option value="4">疫情</option>
-              </select>
+              <label class="layui-form-label">所属分类</label>
+              <div class="layui-input-inline">
+                <select id="cat_id" name="cat_id" lay-verify="required">
+                  <option value=""></option>
+                  <option value="0">军事</option>
+                  <option value="1">娱乐</option>
+                  <option value="2">体育</option>
+                  <option value="3">新闻</option>
+                  <option value="4">疫情</option>
+                </select>
+              </div>
             </div>
-          </div>
           </div>
           <div class="layui-form-item" style="margin-top:70px;">
             <label class="layui-form-label">状态</label>
@@ -96,52 +96,56 @@
     editor.config.uploadImgShowBase64 = true
     // 或者 const editor = new E( document.getElementById('div1') )
     editor.create()
-    layui.use(['element','form','layer','upload'], function () {
+    layui.use(['element', 'form', 'layer', 'upload'], function () {
       var form = layui.form;
       var upload = layui.upload;
-   
+
       //执行实例
       var uploadInst = upload.render({
         elem: '#cover_img_upload' //绑定元素
-        ,url: '/upload/' //上传接口
-        ,done: function({code,message,src}){
+        , url: '/upload/' //上传接口
+        , done: function ({ code, message, src }) {
           //上传完毕回调
-          if(code == 0) {
-            $("#cover-preview").attr("src",src).css("width","150px");
+          if (code == 0) {
+            $("#cover-preview").attr("src", src).css("width", "150px");
             $("input[name='cover']").val(src)
           }
         }
-        ,error: function(){
+        , error: function () {
           //请求异常回调
         }
       });
       //监听提交
       form.on('submit(formDemo)', function (data) {
         let formData = data.field;
-        // 获取富文本编辑器中的内容
-        formData.content = editor.txt.html()
-        // 发送ajax请求，入库数据
-        $.post("/postArt",formData,({errcode,message})=>{
-          if(errcode == 0) {
-            location.href = "/artindex";
+        formData.content = editor.txt.html(); //获取编辑器内容
+        // 发送ajax请求，入库数据即可
+        $.post('/postArt', formData, ({ errcode, message }) => {
+          if (errcode == 0) {
+            location.href = '/artindex';
           }
-          layer.msg(message);
-        },"json")
+          layer.msg(message)
+        }, 'json')
         return false;
       });
       // 加载所有的分类
-      function loadCate() {
-        $.get('/getCate',(res)=>{
-          let optionStr = `<option value=""></option>`;
-          res.forEach(v=>{
-            optionStr += `<option value="${v.cat_id}">${v.name}</option>`;
-          })
-          $("#cat_id").html(optionStr);
-          form.render(); // 重新渲染
-        },'json');
-      }
-      loadCate();
-    });
+      function loadCate(){
+    $.get('/getCate',(res)=>{
+      
+      let optionStr = `<option value=""></option>`;
+      res.forEach(v=>{
+        optionStr += `<option value="${v.cat_id}">${v.name}</option>`
+      })
+      // 赋值给下拉框select
+      // optionStr是属于ajax动态生成的
+      $("#cat_id").html(optionStr);
+      form.render(); // 重新渲染
+
+   
+    },'json')
+  }
+  loadCate();
+});
   </script>
 </body>
 
