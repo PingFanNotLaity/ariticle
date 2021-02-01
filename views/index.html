@@ -19,6 +19,7 @@
   {{include './common/side.html'}}
   <div class="layui-body">
     <!-- 内容主体区域 -->
+    <h4  style="padding: 15px;" id="last_login_date"></h4>
     <div style="padding: 15px;display:flex">
       <div id="cate" style="width: 600px;height:400px;"></div>
       <div id="art" style="width: 600px;height:400px;"></div>
@@ -27,7 +28,8 @@
   {{include './common/footer.html'}}
  
 </div>
-<script src="/public/layui/layui.js"></script>
+{{ include './common/scriptjs.html' }}
+<!-- <script src="/public/layui/layui.js"></script> -->
 <script src="/public/js/echarts.min.js"></script>
 <script>
   // 获取分类统计的数据
@@ -95,6 +97,11 @@ function initEchart(dom,names,total,text,type) {
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 }
+ // 显示用户的信息
+ let userInfo =  JSON.parse(localStorage.getItem('userInfo') || '{}');
+ let last_login_date = util.date_format(userInfo.last_login_date);
+  let str = `上一次登录时间为：${last_login_date}`;
+  $("#last_login_date").html(str)
 //JavaScript代码区域
 layui.use('element', function(){
   var element = layui.element;

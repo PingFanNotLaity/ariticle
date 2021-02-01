@@ -86,6 +86,8 @@ router.get("/logout",(req,res)=>{
 })
 // 用户登录
 router.post("/signin",UserController.signin);
+// 更换用户头像
+router.post("/updateAvatar",UserController.updateAvatar);
 // 匹配失败的路由
 router.all("*",(req,res)=>{
     res.json({errcode:10004,message:"请求错误"});
