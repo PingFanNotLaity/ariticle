@@ -4,9 +4,12 @@ const artTemplate = require('art-template');
 const express_template = require('express-art-template');
 // 引入session会话技术
 let session = require('express-session');
+let cors = require("cors");
 // 导入router路由模块
+const apiRouter = require("./router/apiRouter.js");
 const router = require("./router/router.js");
 let app = express();
+app.use(cors());
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 //配置模板的路径
@@ -29,6 +32,7 @@ let options = {
     }
 };
 app.use( session(options) )
+app.use("/api",apiRouter);
 app.use("/public",express.static(path.join(__dirname,"public")));
 // 上传图片路径的中间件
 app.use("/uploads",express.static(path.join(__dirname,"uploads")));
